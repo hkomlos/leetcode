@@ -1,0 +1,22 @@
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        prods = [1]*len(nums)
+        prefixes = [1]*len(nums)
+        suffixes = [1]*len(nums)
+        pointer1 = 0
+        pointer2 = len(nums) - 1
+        pre_tmp = 1
+        suf_tmp = 1
+        for i in range(len(nums)-1):
+            pre_tmp *= nums[i]
+            prefixes[i+1] = pre_tmp
+            j = len(nums) - i - 1
+            suf_tmp *= nums[j]
+            suffixes[j-1] = suf_tmp
+        for i in range(len(nums)):
+            prods[i] = prefixes[i] * suffixes[i]
+        return prods
