@@ -1,0 +1,39 @@
+class Solution(object):
+    def myAtoi(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        str_digits = "0"
+        sign = 1
+        found_sign = 0
+        found_num = 0
+        next = 1
+        
+        for character in s:
+            if character == " " and found_num + found_sign == 0:
+                next = 1
+            elif character == "0" and found_num + found_sign == 0:
+                found_num = 1
+            elif character == "-" and found_num + found_sign == 0:
+                found_sign = 1
+                sign = -1
+            elif character == "+" and found_num + found_sign == 0:
+                found_sign = 1
+                sign = 1
+            elif character.isdigit():
+                found_num = 1
+                str_digits += character
+            elif not character.isdigit():
+                break
+        
+        my_int = int(str_digits)
+        if my_int >= 2**31 and sign == 1:
+                my_int = 2**31 - 1
+                return my_int
+        if my_int > 2**31 and sign == -1:
+                my_int = -2**31
+                return my_int
+        return int(str_digits)*sign
+
+            
